@@ -2,34 +2,18 @@ from traceback import print_tb
 
 
 def solution(id_list, report, k):
+    answer = [0] * len(id_list)    
+    reports = {x : 0 for x in id_list}
+    print(reports)
 
-    answer = [0 for x in range(len(id_list))]
-    answer2 = [[] for x in range(len(id_list))]
+    for r in set(report):
+        reports[r.split()[1]] += 1
 
-    for x in range(len(report)):
-
-        who = (report[x].split())[0]
-        to = (report[x].split())[1]
-
-        #to의 인덱스번호 찾기
-        to_index = id_list.index(to)
-
-        #이미 동일인을 신고한 이력이있는지
-        if who not in answer2[to_index]:
-            answer2[to_index].append(who)
-
-
-
-    for t in answer2:
-        if(len(t) >= k):
-            for y in range(len(t)):
-                #t[y]  이 이름의 인덱스번호 찾기
-                who_index = id_list.index(t[y])
-                answer[who_index] += 1
-
+    for r in set(report):
+        if reports[r.split()[1]] >= k:
+            answer[id_list.index(r.split()[0])] += 1
 
     return answer
-
 
 if __name__ == '__main__':
     id_list = ["muzi", "frodo", "apeach", "neo"]
